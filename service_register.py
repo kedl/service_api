@@ -5,8 +5,8 @@
 # @Last Modified by:   Danny
 # @Last Modified time: 2017-09-22 14:33:03
 
-from flask import Flask, jsonify, abort, make_response, request, url_for, g
-import base64, time, json
+from flask import Flask, jsonify, abort, make_response, request
+import time, json, base64
 from db_model import session, User, hash_password, Posts
 
 app = Flask(__name__)
@@ -14,7 +14,6 @@ app.config['JSON_AS_ASCII'] = False
 
 
 def generate_token(username):
-    _time = int(time.time())
     str_time = str(int(time.time()))
     s = '.' + username + ':' + str_time + '.'
     token = str(base64.b64encode(bytes(s, encoding='utf-8')))
@@ -22,17 +21,19 @@ def generate_token(username):
 
 
 def judge_token(token):
-
-    if session.query(User).filter(User.token == token).first() is None:
-        return False
-    else:
-        end_time = session.query(User).filter(
-            User.token == token).first().end_time
-        now = int(time.time())
-        if (now - int(end_time)) >= 600:
+    if token is not None:
+        if session.query(User).filter(User.token == token).first() is None:
             return False
         else:
-            return True
+            end_time = session.query(User).filter(
+                User.token == token).first().end_time
+            now = int(time.time())
+            if (now - int(end_time)) >= 600:
+                return False
+            else:
+                return True
+    else:
+        return False
 
 
 @app.route('/login', methods=['POST'])
