@@ -146,8 +146,8 @@ def Get_post():
                         'title': post.title,
                         'text': post.text,
                         'creat_time': post.creat_time
-                }
-            })
+                    }
+                })
             else:
                 abort(404)
     else:
