@@ -1,6 +1,9 @@
-# -*- coding:utf-8 -*-
-# @Author: Codany
-# @Date:   2017-05-08 12:46:42
+#!/usr/local/bin/python3 
+# -*- coding: utf-8 -*- 
+# @Author: Danny 
+# @Date: 2017-09-22 21:46:20 
+# @Last Modified by:   Danny 
+# @Last Modified time: 2017-09-22 21:46:20 
 
 from sqlalchemy import create_engine,Column,String,Integer
 from sqlalchemy.ext.declarative import declarative_base
